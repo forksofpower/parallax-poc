@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax POC</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollTrigger.min.js"></script>
+
+    <style>
+        .pl-container {
+            height: 1250px;
+            position: relative;
+            z-index: -10;
+        }
+        .pl-layer {
+            height: 2500px;
+            background-position: top center;
+            background-size: auto 1095px;
+            background-repeat: no-repeat;
+            width: 100%;
+            position: absolute;
+        }
+        div#pl-layer-1 {
+            background-image: url("./img/sky.png");
+            z-index: -25;
+        }
+        div#pl-layer-2 {
+            background-image: url("./img/mountian.png");
+            z-index: -24;
+        }
+        div#pl-layer-3 {
+            background-image: url("./img/ground.png");
+            z-index: -23;
+        }
+    </style>
+</head>
+<body>
+    <div class="pl-container">
+        <div id="pl-layer-1" class="pl-layer" data-speed="0"></div>
+        <div id="pl-layer-2" class="pl-layer" data-speed="0.25"></div>
+        <div id="pl-layer-3" class="pl-layer" data-speed="0.5"></div>
+    </div>
+
+    <script>
+        gsap.to(".pl-layer", {
+            scrollTrigger: {
+                scrub: true
+            },
+            y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
+            ease: "none"
+        })
+    </script>
+</body>
+</html>
