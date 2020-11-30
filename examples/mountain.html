@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain Parallax</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollTrigger.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /* box-sizing: border-box; */
+        }
+        .header {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 5em;
+            font-weight: bold;
+            color: blue;
+            margin: auto;
+            margin-top: 45vh;
+            text-align: center;
+        }
+        .pl-image {
+            margin-top: 45vh;
+        }
+        .pl-container {
+            height: 115vh;
+            width: 100vw;
+            position: relative;
+            z-index: -10;
+        }
+        .layer {
+            width: 100vw;
+            position: absolute;
+        }
+        .pl-layer {
+            /* height: 125vh; */
+            /* background-size: cover; */
+            /* background-position: top center; */
+            /* background-repeat: no-repeat; */
+            /* background-size: cover; */
+            /* background-repeat: no-repeat; */
+            width: 100vw;
+            position: absolute;
+        }
+        div#pl-layer-1 {
+            /* background-image: url("../img/mountain/2.svg"); */
+            z-index: -25;
+        }
+        div#pl-layer-2 {
+            z-index: -24;
+        }
+        div#pl-layer-3 {
+            /* background-image: url("../img/mountain/1.svg"); */
+            z-index: -23;
+        }
+        .content {
+            background-color: white;
+            height: 5000px;
+
+        }
+    </style>
+</head>
+<body>
+    <header class="pl-container">
+        <div id="pl-layer-1" class="pl-layer" data-speed="0.15">
+            <img src="../img/mountain/2.svg" class="pl-image" alt="" />
+        </div>
+        
+        <div id="pl-layer-2" class="layer header" data-speed="-0.5"> 
+            <!-- negative speed moves element down -->
+            Dank Memes
+        </div>
+        <div id="pl-layer-3" class="pl-layer" data-speed="0.4">
+            <img src="../img/mountain/1.svg" class="pl-image" alt="" />
+        </div>
+    </header>
+
+    <script>
+        // header fade out
+        gsap.set('header', {
+            opacity: 1
+        })
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "header",
+                start: "700",
+                end: "850",
+                scrub: true,
+                markers: true
+            }
+        })
+        tl.to("header", { opacity: 0,  duration: 0.5 })
+
+        gsap.to(".pl-layer", {
+            scrollTrigger: {
+                scrub: true
+                // markers: true
+            },
+            y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
+            ease: "none"
+        })
+    </script>
+</body>
+</html>
+
+<!-- 
+    // const layers = document.querySelectorAll(".pl-layer");
+        // const MAX_SCROLL = window.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight)
+
+        // document.addEventListener('scroll', (e) => {
+            
+        //     let target = e.target
+        // })
+ -->

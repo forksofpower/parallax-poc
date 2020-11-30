@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax POC</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollTrigger.min.js"></script>
+
+    <style>
+        .pl-container {
+            height: 750px;
+            position: relative;
+            z-index: -10;
+            overflow: hidden;
+        }
+        .pl-layer {
+            height: 1250px;
+            background-position: top center;
+            background-size: auto 1038px;
+            background-repeat: no-repeat;
+            width: 100%;
+            position: absolute;
+        }
+        div#pl-layer-1 {
+            background-image: url("../img/ghibli/3.png");
+            z-index: -25;
+        }
+        div#pl-layer-2 {
+            background-image: url("../img/ghibli/2.png");
+            z-index: -24;
+        }
+        div#pl-layer-3 {
+            background-image: url("../img/ghibli/1.png");
+            z-index: -23;
+        }
+    </style>
+</head>
+<body>
+    <div class="pl-container">
+        <div id="pl-layer-1" class="pl-layer" data-speed="0"></div>
+        <div id="pl-layer-2" class="pl-layer" data-speed="0.25"></div>
+        <div id="pl-layer-3" class="pl-layer" data-speed="0.5" data-direction="right"></div>
+    </div>
+    <div style="height: 1000px;">Hello</div>
+    
+    <script>
+        gsap.to(".pl-layer", {
+            scrollTrigger: {
+                scrub: true
+            },
+            y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
+            x: (i, target) => {
+                console.log(target.dataset.direction)
+                if (target.dataset.direction === "right") {
+                    return ScrollTrigger.maxScroll(window) * target.dataset.speed
+                }
+            },
+            ease: "none"
+        })
+    </script>
+</body>
+</html>
